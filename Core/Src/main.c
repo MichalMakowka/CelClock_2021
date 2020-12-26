@@ -17,7 +17,7 @@ int main(void) {
 
 	uint8_t red, green, blue;	// Digit colour channel values
 
-	TMENU menu_strct;	// takisekoment
+	TMENU menu_strct;
 
 	SystemCFG();	// Configure uC registers
 
