@@ -206,7 +206,7 @@ void loveyou(char * msg) {
 	SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 	// Scroll loveyou message
 	if(msg != NULL) ScrollLed(msg, 400, sizeof(msg));
-	ScrollLed("love you celjy", 400, sizeof("love you celjy"));
+	ScrollLed("love you", 400, sizeof("love you"));
 	ScrollLed("you are the best", 400, sizeof("you are the best"));
 
 }

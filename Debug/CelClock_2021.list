@@ -6467,7 +6467,7 @@ uint8_t ADCCompress (uint16_t adc) {
  8002c5c:	00001068 	.word	0x00001068
 
 08002c60 <ADC1_COMP_IRQHandler>:
-	ScrollLed("love you celjy", 400, sizeof("love you celjy"));
+	ScrollLed("love you", 400, sizeof("love you"));
 	ScrollLed("you are the best", 400, sizeof("you are the best"));
 
 }
