@@ -1,0 +1,7 @@
+clk_menu.c:30:6:menuInputService	16	static
+clk_menu.c:69:6:selectTime	56	static
+clk_menu.c:136:6:displayMenu	24	static
+clk_menu.c:190:6:displayConfig	24	static
+clk_menu.c:250:6:displayAlarm	16	static
+clk_menu.c:256:6:displayStudy	16	static
+clk_menu.c:263:9:decToBcd	24	static
