@@ -49,7 +49,7 @@ void SystemCFG (void)	{
 	GPIOA->MODER &= ~(GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);	// PA6-PA7: Output
 	// *********************************
 
-
+/*
 	// *** Configure DMA ***
 	RCC->AHBENR |= RCC_AHBENR_DMA1EN;
 	RCC->APBENR2 |= RCC_APBENR2_SPI1EN;
@@ -72,7 +72,7 @@ void SystemCFG (void)	{
 	// *** Configure DMAMUX ***
 	DMAMUX1_Channel1->CCR |= DMAMUX_CxCR_DMAREQ_ID_0 | DMAMUX_CxCR_DMAREQ_ID_4;			// DMA request identification: SPI1_TX (17)
 	// *********************************
-
+*/
 	// *** Configure TIM14 for delay subroutine ***
 	NVIC_EnableIRQ(TIM14_IRQn);
 	RCC->APBENR2 |= RCC_APBENR2_TIM14EN;	// Enable TIM14 clock
@@ -196,11 +196,11 @@ void SystemCFG (void)	{
 	EXTI->FTSR1 |= EXTI_FTSR1_FT11 | EXTI_FTSR1_FT12 | EXTI_FTSR1_FT15;		// Falling edge event
 	EXTI->IMR1 |= EXTI_IMR1_IM11 | EXTI_IMR1_IM12 | EXTI_IMR1_IM15;
 	// *********************************
-
+/*
 	// *** Enable DMA Channel ***
 	DMA1_Channel1->CCR |= DMA_CCR_EN;	// Channel 1 enable (SPI1_TX)
 	// *********************************
-
+*/
 }
 
 
@@ -212,7 +212,7 @@ void delay_ms (uint16_t ms)	{
 }
 
 
-
+/*
 __attribute__((interrupt)) void DMA1_Channel1_IRQHandler(void)	{
 	if (DMA1->ISR & DMA_ISR_TCIF1){
 		DMA1->IFCR = DMA_IFCR_CTCIF1;	// Clear DMA Channel 1 transfer complete flag
@@ -224,7 +224,7 @@ __attribute__((interrupt)) void DMA1_Channel1_IRQHandler(void)	{
 		GPIOA->ODR |= GPIO_ODR_OD6;
 	}
 }
-
+*/
 
 __attribute__((interrupt)) void TIM14_IRQHandler(void)	{
 	if (TIM14->SR & TIM_SR_CC1IF)	{
