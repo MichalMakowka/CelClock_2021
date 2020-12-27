@@ -84,7 +84,7 @@ int main(void) {
 		}
 
 		// Check alarm mode
-		if (al_enable_flag == 1 && al_hour_t == hour_t && al_hour_u && hour_u && al_min_t == minute_t && al_min_u == minute_u) {	// Ring alarm if above is true
+		if (al_enable_flag == 1 && al_hour_t == hour_t && al_hour_u == hour_u && al_min_t == minute_t && al_min_u == minute_u) {	// Ring alarm if above is true
 			// Clear LCD Display (display SPACEs)
 			LEDClr();
 			// Clear WS2812B Display
