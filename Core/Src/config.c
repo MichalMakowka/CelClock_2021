@@ -49,11 +49,11 @@ void SystemCFG (void)	{
 	GPIOA->MODER &= ~(GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);	// PA6-PA7: Output
 	// *********************************
 
-/*
+
 	// *** Configure DMA ***
-	RCC->AHBENR |= RCC_AHBENR_DMA1EN;
+//	RCC->AHBENR |= RCC_AHBENR_DMA1EN;
 	RCC->APBENR2 |= RCC_APBENR2_SPI1EN;
-	NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+/*	NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 
 	// Channel 1 config. (SPI1_TX)
 	SPI1->CR2 |= SPI_CR2_TXDMAEN;	// Enable Tx in DMA mode
