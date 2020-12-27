@@ -135,8 +135,8 @@ void selectAlarm(void) {
 	input.display[0]='h'; input.display[1]='r';
 	input.idx_max=23;
 	input.idx_min=0;
-	input.idx_default_ten = 0;
-	input.idx_default_units = 0;
+	input.idx_default_ten = al_hour_t;
+	input.idx_default_units = al_hour_u;
 	menuInputService(&input);
 	al_hour_t = input.temp_val_ten;
 	al_hour_u = input.temp_val_units;
@@ -145,8 +145,8 @@ void selectAlarm(void) {
 	input.display[0]='m'; input.display[1]='i'; input.display[2]='n';
 	input.idx_max=59;
 	input.idx_min=0;
-	input.idx_default_ten = 0;
-	input.idx_default_units = 0;
+	input.idx_default_ten = al_min_t;
+	input.idx_default_units = al_min_u;
 	menuInputService(&input);
 	al_min_t = input.temp_val_ten;
 	al_min_u = input.temp_val_units;
@@ -183,8 +183,8 @@ void selectTime(void) {
 	input.display[0]='h'; input.display[1]='r';
 	input.idx_max=23;
 	input.idx_min=0;
-	input.idx_default_ten = 0;
-	input.idx_default_units = 0;
+	input.idx_default_ten = hour_t;
+	input.idx_default_units = hour_u;
 	menuInputService(&input);
 	temp_t_hour = input.temp_val_ten;
 	temp_u_hour = input.temp_val_units;
@@ -193,8 +193,8 @@ void selectTime(void) {
 	input.display[0]='m'; input.display[1]='i'; input.display[2]='n';
 	input.idx_max=59;
 	input.idx_min=0;
-	input.idx_default_ten = 0;
-	input.idx_default_units = 0;
+	input.idx_default_ten = minute_t;
+	input.idx_default_units = minute_u;
 	menuInputService(&input);
 	temp_t_minute = input.temp_val_ten;
 	temp_u_minute = input.temp_val_units;
@@ -205,8 +205,8 @@ void selectTime(void) {
 	input.display[0]='d'; input.display[1]='a'; input.display[2]='y';
 	input.idx_max=31;
 	input.idx_min=1;
-	input.idx_default_ten = 0;
-	input.idx_default_units = 1;
+	input.idx_default_ten = day_t;
+	input.idx_default_units = day_u;
 	menuInputService(&input);
 	temp_t_day = input.temp_val_ten;
 	temp_u_day = input.temp_val_units;
@@ -215,8 +215,8 @@ void selectTime(void) {
 	input.display[0]='m'; input.display[1]='o'; input.display[2]='n';
 	input.idx_max=12;
 	input.idx_min=1;
-	input.idx_default_ten = 0;
-	input.idx_default_units = 1;
+	input.idx_default_ten = month_t;
+	input.idx_default_units = month_u;
 	menuInputService(&input);
 	temp_t_month = input.temp_val_ten;
 	temp_u_month = input.temp_val_units;
@@ -225,8 +225,8 @@ void selectTime(void) {
 	input.display[0]='y'; input.display[1]='e'; input.display[2]='a'; input.display[3]='r';
 	input.idx_max=99;
 	input.idx_min=0;
-	input.idx_default_ten = 1;
-	input.idx_default_units = 8;
+	input.idx_default_ten = year_t;
+	input.idx_default_units = year_u;
 	menuInputService(&input);
 	temp_t_year = input.temp_val_ten;
 	temp_u_year = input.temp_val_units;
