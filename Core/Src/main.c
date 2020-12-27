@@ -87,12 +87,14 @@ int main(void) {
 			FillLEDArray(LED_buf, 0, 0, 0);
 			SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 			DisplayLEDStr("alarm");
+			dot_enable[1]=0; dot_enable[3]=0;
 			while(!button_flag[B_SET]) {
 				buzz(250);
 				delay_ms(250);
 			}
 			LEDClr();
 			button_flag[B_SET]=0;
+			dot_enable[1]=1; dot_enable[3]=1;
 			al_enable_flag = 0;
 			GPIOA->ODR &= ~GPIO_ODR_OD6;
 		}
