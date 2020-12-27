@@ -36,10 +36,7 @@ enum{B_SET, B_DOWN, B_UP};	// Intexes for the button_flag[3] array
 void SystemCFG (void);
 void delay_ms (uint16_t ms);
 
-
-
-
-
+void buzz (uint8_t time);
 
 
 

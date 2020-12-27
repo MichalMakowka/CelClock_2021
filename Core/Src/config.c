@@ -226,6 +226,13 @@ __attribute__((interrupt)) void DMA1_Channel1_IRQHandler(void)	{
 }
 */
 
+
+void buzz (uint8_t time) {
+	GPIOA->ODR |= GPIO_ODR_OD7;
+	delay_ms(time);
+	GPIOA->ODR &= ~GPIO_ODR_OD7;
+}
+
 __attribute__((interrupt)) void TIM14_IRQHandler(void)	{
 	if (TIM14->SR & TIM_SR_CC1IF)	{
 		TIM14->SR &= ~TIM_SR_CC1IF;	// Clear flag

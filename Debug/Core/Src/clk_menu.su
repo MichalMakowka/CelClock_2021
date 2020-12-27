@@ -1,7 +1,10 @@
-clk_menu.c:30:6:menuInputService	16	static
-clk_menu.c:69:6:selectTime	56	static
-clk_menu.c:136:6:displayMenu	24	static
-clk_menu.c:190:6:displayConfig	24	static
-clk_menu.c:250:6:displayAlarm	16	static
-clk_menu.c:256:6:displayStudy	16	static
-clk_menu.c:263:9:decToBcd	24	static
+clk_menu.c:33:6:menuInputService	16	static
+clk_menu.c:73:6:menuBranchService	24	static
+clk_menu.c:130:6:selectAlarm	24	static
+clk_menu.c:159:6:EnableAlarm	8	static
+clk_menu.c:174:6:selectTime	56	static
+clk_menu.c:241:6:displayMenu	16	static
+clk_menu.c:253:6:displayConfig	24	static
+clk_menu.c:321:6:displayAlarm	24	static
+clk_menu.c:395:6:displayStudy	16	static
+clk_menu.c:402:9:decToBcd	24	static

@@ -23,12 +23,19 @@ typedef struct menu {
 	uint8_t nxt_level;
 	uint8_t back;
 
-	// Executive functions
+	uint8_t menu_pos_max;
+
+	// Executive functions (main menu)
 	void (*configuration)(void * wsk);
-	void (*study)(void);
-	void (*alarm)(void);
+	void (*study)(void * wsk);
+	void (*alarm)(void * wsk);
 
 } TMENU;
+
+
+uint8_t al_enable_flag;
+uint8_t al_hour_t, al_hour_u, al_min_t, al_min_u;
+
 
 
 // Menu options: position order

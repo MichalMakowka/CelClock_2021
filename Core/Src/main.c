@@ -34,10 +34,6 @@ int main(void) {
 	ScrollLed("hi celine", medium, sizeof("hi celine"));
 
 
-	// Register menu executive functions
-	menu_strct.configuration = (void*)displayConfig;
-	menu_strct.alarm = (void*)displayAlarm;
-	menu_strct.study = (void*)displayStudy;
 
 	button_flag[B_UP]=0;
 	button_flag[B_DOWN]=0;
@@ -75,11 +71,30 @@ int main(void) {
 		SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 		delay_ms(990);
 
+		// Check if menu should be displayed
 		if (button_flag[B_SET]) {
 			button_flag[B_SET]=0;
 			dot_enable[1]=0; dot_enable[3]=0;
 			displayMenu(&menu_strct);
 			dot_enable[1]=1; dot_enable[3]=1;
+		}
+
+		// Check alarm mode
+		if (al_enable_flag == 1 && al_hour_t == hour_t && al_hour_u && hour_u && al_min_t == minute_t && al_min_u == minute_u) {	// Ring alarm if above is true
+			// Clear LCD Display (display SPACEs)
+			LEDClr();
+			// Clear WS2812B Display
+			FillLEDArray(LED_buf, 0, 0, 0);
+			SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
+			DisplayLEDStr("alarm");
+			while(!button_flag[B_SET]) {
+				buzz(250);
+				delay_ms(250);
+			}
+			LEDClr();
+			button_flag[B_SET]=0;
+			al_enable_flag = 0;
+			GPIOA->ODR &= ~GPIO_ODR_OD6;
 		}
 
 

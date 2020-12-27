@@ -10,8 +10,9 @@
 
 char * main_options[4] = {"config", "alarm", "study", "back"};
 char * config_options[2] = {"time", "back"};
-char * alarm_options[3] = {"config", "enable", "back"};
+char * alarm_options[3] = {"set hm", "enable", "back"};
 char * study_options[4] = {"study", "break", "enable", "back"};
+
 
 
 typedef struct menuInput {
@@ -25,6 +26,8 @@ typedef struct menuInput {
 	char display[4];
 } TINPUT;
 
+
+TMENU menu_strct;
 
 
 void menuInputService (TINPUT * in_wsk) {
@@ -61,6 +64,108 @@ void menuInputService (TINPUT * in_wsk) {
 		delay_ms(250);
 	}
 	button_flag[B_SET]=0;
+}
+
+
+
+
+
+void menuBranchService (TMENU * wsk) {
+
+	LEDClr();
+
+	FillLEDArray(LED_buf, 0, 0, 0);
+	SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
+
+	button_flag[B_UP]=0;
+	button_flag[B_DOWN]=0;
+	button_flag[B_SET]=0;
+
+	wsk->nxt_level = 0;
+	wsk->menu_pos = 0;
+	wsk->nxt_level = 0;
+	wsk->back = 0;
+
+	uint8_t temp_pos;
+
+	while(!wsk->back) {
+
+	if (button_flag[B_UP]) {
+		button_flag[B_UP]=0;
+		wsk->menu_pos++;
+		if(wsk->menu_pos > wsk->menu_pos_max) wsk->menu_pos=0;
+	}
+
+	if (button_flag[B_DOWN]) {
+		button_flag[B_DOWN]=0;
+		wsk->menu_pos--;
+		if(wsk->menu_pos>250) wsk->menu_pos = wsk->menu_pos_max;
+	}
+
+
+	if (button_flag[B_SET]) {
+		button_flag[B_SET]=0;
+		wsk->nxt_level=1;
+	}
+
+	if (temp_pos != wsk->menu_pos) {
+		DisplayLEDStr(main_options[wsk->menu_pos]);
+		temp_pos = wsk->menu_pos;
+	}
+
+
+	if(wsk->nxt_level) {
+		if (wsk->menu_pos == p_main_back) return;
+		else if ((wsk->configuration) && (wsk->menu_pos == p_main_config)) wsk->configuration(wsk);
+		else if ((wsk->alarm) && (wsk->menu_pos == p_main_alarm)) wsk->alarm(wsk);
+		else if ((wsk->study) && (wsk->menu_pos == p_main_study)) wsk->study(wsk);
+		}
+	delay_ms(250);
+	}
+
+}
+
+
+
+void selectAlarm(void) {
+
+	TINPUT input;
+
+	// Input hour
+	input.display[0]='h'; input.display[1]='r';
+	input.idx_max=23;
+	input.idx_min=0;
+	input.idx_default_ten = 0;
+	input.idx_default_units = 0;
+	menuInputService(&input);
+	al_hour_t = input.temp_val_ten;
+	al_hour_u = input.temp_val_units;
+
+	// Input minute
+	input.display[0]='m'; input.display[1]='i'; input.display[2]='n';
+	input.idx_max=59;
+	input.idx_min=0;
+	input.idx_default_ten = 0;
+	input.idx_default_units = 0;
+	menuInputService(&input);
+	al_min_t = input.temp_val_ten;
+	al_min_u = input.temp_val_units;
+
+	al_enable_flag = 1;
+	GPIOA->ODR |= GPIO_ODR_OD6;
+
+}
+
+void EnableAlarm(void) {
+
+	if (!al_enable_flag) {
+		al_enable_flag = 1;
+		GPIOA->ODR |= GPIO_ODR_OD6;
+	} else {
+		al_enable_flag = 0;
+		GPIOA->ODR &= ~GPIO_ODR_OD6;
+	}
+
 }
 
 
@@ -134,56 +239,14 @@ void selectTime(void) {
 
 
 void displayMenu (TMENU * str_wsk) {
-	LEDClr();
 
-	FillLEDArray(LED_buf, 0, 0, 0);
-	SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
+	str_wsk->menu_pos_max = 3;	// Number of menu options in this branch
 
-	button_flag[B_UP]=0;
-	button_flag[B_DOWN]=0;
-	button_flag[B_SET]=0;
-
-	str_wsk->nxt_level = 0;
-	str_wsk->menu_pos = 0;
-	str_wsk->nxt_level = 0;
-	str_wsk->back = 0;
-
-	uint8_t temp_pos;
-
-	while(!str_wsk->back) {
-
-	if (button_flag[B_UP]) {
-		button_flag[B_UP]=0;
-		str_wsk->menu_pos++;
-		if(str_wsk->menu_pos>3) str_wsk->menu_pos=0;
-	}
-
-	if (button_flag[B_DOWN]) {
-		button_flag[B_DOWN]=0;
-		str_wsk->menu_pos--;
-		if(str_wsk->menu_pos>250) str_wsk->menu_pos=3;
-	}
-
-
-	if (button_flag[B_SET]) {
-		button_flag[B_SET]=0;
-		str_wsk->nxt_level=1;
-	}
-
-	if (temp_pos != str_wsk->menu_pos) {
-		DisplayLEDStr(main_options[str_wsk->menu_pos]);
-		temp_pos = str_wsk->menu_pos;
-	}
-
-
-		if(str_wsk->nxt_level) {
-			if (str_wsk->menu_pos == p_main_back) return;
-			if ((str_wsk->configuration) && (str_wsk->menu_pos == p_main_config)) str_wsk->configuration(str_wsk);
-			if ((str_wsk->alarm) && (str_wsk->menu_pos == p_main_alarm)) str_wsk->alarm();
-			if ((str_wsk->study) && (str_wsk->menu_pos == p_main_study)) str_wsk->study();
-		}
-	delay_ms(250);
-	}
+	// Register menu executive functions
+	str_wsk->configuration = (void*)displayConfig;
+	str_wsk->alarm = (void*)displayAlarm;
+	str_wsk->study = (void*)displayStudy;
+	menuBranchService(str_wsk);
 }
 
 
@@ -236,8 +299,16 @@ void displayConfig (TMENU * str_wsk) {
 
 
 			if(str_wsk->nxt_level) {
-				if (str_wsk->menu_pos == p_conf_back) return;
-				if (str_wsk->menu_pos == p_conf_time) {selectTime(); str_wsk->back=1;}
+				if (str_wsk->menu_pos == p_conf_back) {
+					str_wsk->nxt_level = 0;
+					str_wsk->back=1;
+					return;
+				}
+				if (str_wsk->menu_pos == p_conf_time ) {
+					str_wsk->nxt_level = 0;
+					selectTime();
+					str_wsk->back=1;
+				}
 
 			}
 			delay_ms(250);
@@ -248,10 +319,78 @@ void displayConfig (TMENU * str_wsk) {
 
 
 void displayAlarm (TMENU * str_wsk) {
+	LEDClr();
 
-	// To be done
+	FillLEDArray(LED_buf, 0, 0, 0);
+	SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 
+
+	button_flag[B_UP]=0;
+	button_flag[B_DOWN]=0;
+	button_flag[B_SET]=0;
+
+	str_wsk->nxt_level = 0;
+	str_wsk->menu_pos = 0;
+	str_wsk->back = 0;
+
+	DisplayLEDStr(alarm_options[str_wsk->menu_pos]);
+
+	uint8_t temp_pos;
+
+	while(!str_wsk->back) {
+
+		if (button_flag[B_UP]) {
+			delay_ms(80);
+			button_flag[B_UP]=0;
+			str_wsk->menu_pos++;
+			if(str_wsk->menu_pos>2) str_wsk->menu_pos=0;
+		}
+
+		if (button_flag[B_DOWN]) {
+			delay_ms(80);
+			button_flag[B_DOWN]=0;
+			str_wsk->menu_pos--;
+			if(str_wsk->menu_pos>250) str_wsk->menu_pos=2;
+		}
+
+
+		if (button_flag[B_SET]) {
+			delay_ms(80);
+			button_flag[B_SET]=0;
+			str_wsk->nxt_level=1;
+		}
+
+		if (temp_pos != str_wsk->menu_pos) {
+			DisplayLEDStr(alarm_options[str_wsk->menu_pos]);
+			temp_pos = str_wsk->menu_pos;
+		}
+
+
+			if(str_wsk->nxt_level) {
+				if (str_wsk->menu_pos == p_al_back) {
+					str_wsk->nxt_level = 0;
+					str_wsk->back=1;
+					return;
+				}
+				if (str_wsk->menu_pos == p_al_time ) {
+					str_wsk->nxt_level = 0;
+					selectAlarm();
+					str_wsk->back=1;
+				}
+				if (str_wsk->menu_pos == p_al_enable ) {
+					str_wsk->nxt_level = 0;
+					EnableAlarm();
+					str_wsk->back=1;
+				}
+
+			}
+
+			delay_ms(250);
+		}
 }
+
+
+
 
 void displayStudy (TMENU * str_wsk) {
 
