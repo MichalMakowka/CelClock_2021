@@ -8,4 +8,5 @@ ws_lib.c:145:6:SpiLed_Send	16	static
 ws_lib.c:151:6:assignColour	40	static
 ws_lib.c:176:9:ADCCompress	16	static
 ws_lib.c:193:6:loveyou	24	static
-ws_lib.c:214:33:ADC1_COMP_IRQHandler	8	static
+ws_lib.c:214:6:welcomeStrip	40	static
+ws_lib.c:240:33:ADC1_COMP_IRQHandler	8	static

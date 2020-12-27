@@ -39,7 +39,7 @@ volatile uint8_t day_u;
 // T3: 18:00 - 21:00
 #define R_T3 170
 #define G_T3 50
-#define B_T3 35
+#define B_T3 45
 // T4: 21:00 - 23:00
 #define R_T4 155
 #define G_T4 0
@@ -47,11 +47,11 @@ volatile uint8_t day_u;
 // T5: 23:00 - 5:00
 #define R_T5 0
 #define G_T5 0
-#define B_T5 220
+#define B_T5 170
 // T6: 5:00 - 6:00
 #define R_T6 0
 #define G_T6 0
-#define B_T6 220
+#define B_T6 170
 // **************************
 
 

@@ -1,6 +1,6 @@
 core_cm0plus.h:741:22:__NVIC_EnableIRQ	16	static
 config.c:15:6:SystemCFG	16	static
-config.c:207:6:delay_ms	16	static
-config.c:230:6:buzz	16	static
-config.c:236:33:TIM14_IRQHandler	8	static
-config.c:246:33:EXTI4_15_IRQHandler	8	static
+config.c:212:6:delay_ms	16	static
+config.c:235:6:buzz	16	static
+config.c:241:33:TIM14_IRQHandler	8	static
+config.c:251:33:EXTI4_15_IRQHandler	8	static

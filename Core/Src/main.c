@@ -30,10 +30,14 @@ int main(void) {
 	FillLEDArray(LED_buf, 0, 0, 0);
 	SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 
+	// Welcome strip
+	delay_ms(200);
+	welcomeStrip(LED_buf);
+
 	// Scroll welcome message
-	ScrollLed("hi celine", medium, sizeof("hi celine"));
+	ScrollLed("hello celine", medium, sizeof("hello celine"));
 
-
+	loveyou(NULL);
 
 	button_flag[B_UP]=0;
 	button_flag[B_DOWN]=0;
@@ -84,12 +88,16 @@ int main(void) {
 			// Clear LCD Display (display SPACEs)
 			LEDClr();
 			// Clear WS2812B Display
-			FillLEDArray(LED_buf, 0, 0, 0);
+			FillLEDArray(LED_buf, 30, 0, 0);
 			SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 			DisplayLEDStr("alarm");
 			dot_enable[1]=0; dot_enable[3]=0;
 			while(!button_flag[B_SET]) {
+				FillLEDArray(LED_buf, 30, 0, 0);
+				SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 				buzz(250);
+				FillLEDArray(LED_buf, 0, 0, 30);
+				SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 				delay_ms(250);
 			}
 			LEDClr();

@@ -193,24 +193,50 @@ uint8_t ADCCompress (uint16_t adc) {
 void loveyou(char * msg) {
 	// Display heart
 	FillLEDArray(LED_buf, 0, 0, 0);
-	FillLEDSegment(LED_buf, 14, 14, 100, 0, 0);
-	FillLEDSegment(LED_buf, 16, 16, 100, 0, 0);
-	FillLEDSegment(LED_buf, 20, 20, 100, 0, 0);
-	FillLEDSegment(LED_buf, 22, 24, 100, 0, 0);
-	FillLEDSegment(LED_buf, 24, 24, 100, 0, 0);
-	FillLEDSegment(LED_buf, 26, 26, 100, 0, 0);
-	FillLEDSegment(LED_buf, 29, 29, 100, 0, 0);
-	FillLEDSegment(LED_buf, 31, 33, 100, 0, 0);
-	FillLEDSegment(LED_buf, 35, 35, 100, 0, 0);
-	FillLEDSegment(LED_buf, 39, 39, 100, 0, 0);
+	FillLEDSegment(LED_buf, 14, 14, 30, 0, 0);
+	FillLEDSegment(LED_buf, 16, 16, 30, 0, 0);
+	FillLEDSegment(LED_buf, 20, 20, 30, 0, 0);
+	FillLEDSegment(LED_buf, 22, 24, 30, 0, 0);
+	FillLEDSegment(LED_buf, 24, 24, 30, 0, 0);
+	FillLEDSegment(LED_buf, 26, 26, 30, 0, 0);
+	FillLEDSegment(LED_buf, 29, 29, 30, 0, 0);
+	FillLEDSegment(LED_buf, 31, 33, 30, 0, 0);
+	FillLEDSegment(LED_buf, 35, 35, 30, 0, 0);
+	FillLEDSegment(LED_buf, 39, 39, 30, 0, 0);
 	SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
 	// Scroll loveyou message
 	if(msg != NULL) ScrollLed(msg, 400, sizeof(msg));
-	ScrollLed("love you", 400, sizeof("love you"));
-	ScrollLed("you are the best", 400, sizeof("you are the best"));
+	ScrollLed("love you", 300, sizeof("love you"));
+	ScrollLed("you are the best", 300, sizeof("you are the best"));
 
 }
 
+void welcomeStrip(uint8_t * buf) {
+	for (uint16_t i=0; i<WS_NUMBER; i++) {
+		FillLEDSegment(buf, i, i, 30, 30, 0);
+		SPI_SEND_WSBUF(buf, sizeof(buf));
+		delay_ms(20);
+	}
+	for (uint16_t i=0; i<WS_NUMBER; i++) {
+		FillLEDSegment(buf, i, i, 30, 0, 30);
+		SPI_SEND_WSBUF(buf, sizeof(buf));
+		delay_ms(20);
+	}
+	for (uint16_t i=0; i<WS_NUMBER; i++) {
+		FillLEDSegment(buf, i, i, 0, 30, 30);
+		SPI_SEND_WSBUF(buf, sizeof(buf));
+		delay_ms(20);
+	}
+	for (uint16_t i=0; i<WS_NUMBER; i++) {
+		FillLEDSegment(buf, i, i, 0, 0, 0);
+		SPI_SEND_WSBUF(buf, sizeof(buf));
+		delay_ms(20);
+	}
+
+
+}
+
+// LED brightness ADC measurement
 __attribute__((interrupt)) void ADC1_COMP_IRQHandler(void)	{
 	ADC1->ISR |= ADC_ISR_EOC;	// Clear end of conversion flag
 	ADC_result = ADC1->DR;

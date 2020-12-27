@@ -40,6 +40,6 @@ void assignColour(uint8_t ht, uint8_t hu, uint8_t * r, uint8_t * g, uint8_t * b)
 
 
 void loveyou(char * msg);
-
+void welcomeStrip(uint8_t * buf);
 
 #endif /* INC_WS_LIB_H_ */

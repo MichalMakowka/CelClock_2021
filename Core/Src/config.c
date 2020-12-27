@@ -32,7 +32,7 @@ void SystemCFG (void)	{
 	// *********************************
 
 
-	// *** Configure GPIO: Techled, LED Display, BUZZ ***
+	// *** Configure GPIO: Techled, LED Display, BUZZ, BATTERY CONTROL ***
 	RCC->IOPENR |= RCC_IOPENR_GPIOAEN | RCC_IOPENR_GPIOBEN | RCC_IOPENR_GPIOCEN | RCC_IOPENR_GPIODEN | RCC_IOPENR_GPIOFEN;	// GPIO: ABCDF
 
 	GPIOB->MODER = GPIO_MODER_MODE0_0 | GPIO_MODER_MODE1_0 | GPIO_MODER_MODE2_0 | GPIO_MODER_MODE3_0 |
@@ -46,7 +46,8 @@ void SystemCFG (void)	{
 	GPIOD->ODR |= (GPIO_ODR_OD0 | GPIO_ODR_OD1 | GPIO_ODR_OD2 | GPIO_ODR_OD3);
 	GPIOD->MODER &= ~(GPIO_MODER_MODE0_1 | GPIO_MODER_MODE1_1 | GPIO_MODER_MODE2_1 | GPIO_MODER_MODE3_1);	// PD0-PD3: Output
 	// Techled, BUZZ
-	GPIOA->MODER &= ~(GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);	// PA6-PA7: Output
+	GPIOA->MODER &= ~(GPIO_MODER_MODE1_1 | GPIO_MODER_MODE6_1/* | GPIO_MODER_MODE7_1*/);	// PA1, PA6-PA7: Output
+//	GPIOA->ODR |= GPIO_ODR_OD1;		// Battery ctrl (capacitor charging - not connected to the V_Bat)
 	// *********************************
 
 
@@ -184,6 +185,7 @@ void SystemCFG (void)	{
 	// SW2 (SET) - PA11 | SW3 (DOWN) - PA12 | SW4 (UP) - PB15
 	GPIOA->MODER &= ~(GPIO_MODER_MODE11_0 | GPIO_MODER_MODE11_1);
 	GPIOA->MODER &= ~(GPIO_MODER_MODE12_0 | GPIO_MODER_MODE12_1);
+//	GPIOC->MODER &= ~(GPIO_MODER_MODE13_0 | GPIO_MODER_MODE13_1);	// WAKEUP EXTI (PC13)
 	GPIOB->MODER &= ~(GPIO_MODER_MODE15_0 | GPIO_MODER_MODE15_1);
 	GPIOA->PUPDR |= GPIO_PUPDR_PUPD11_0;
 	GPIOA->PUPDR |= GPIO_PUPDR_PUPD12_0;
@@ -193,7 +195,10 @@ void SystemCFG (void)	{
 	EXTI->EXTICR[2] |= ((0x00)<<24);	// Set PA11
 	EXTI->EXTICR[3] |= ((0x00)<<0);		// Set PA12
 	EXTI->EXTICR[3] |= ((0x01)<<24);	// Set PB15
+
+
 	EXTI->FTSR1 |= EXTI_FTSR1_FT11 | EXTI_FTSR1_FT12 | EXTI_FTSR1_FT15;		// Falling edge event
+
 	EXTI->IMR1 |= EXTI_IMR1_IM11 | EXTI_IMR1_IM12 | EXTI_IMR1_IM15;
 	// *********************************
 /*
@@ -258,6 +263,7 @@ __attribute__((interrupt)) void EXTI4_15_IRQHandler(void)	{
 		EXTI->FPR1 |= EXTI_FPR1_FPIF15;
 		button_flag[B_UP] = 1;
 		}
+
 }
 
 
