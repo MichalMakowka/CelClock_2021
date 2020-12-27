@@ -45,7 +45,7 @@ int main(void) {
 
 	while (1) {
 
-		// IF ADC idle, start conversion
+		// IF ADC idle, start the conversion
 		if ((ADC1->CR & ADC_CR_ADSTART) == 0) {
 			ADC1->CR |= ADC_CR_ADSTART;		// Start ADC conversion
 		}
