@@ -36,10 +36,14 @@ typedef struct menu {
 uint8_t al_enable_flag;
 uint8_t al_hour_t, al_hour_u, al_min_t, al_min_u;
 
+uint8_t std_enable_flag;
+uint8_t std_st_hour_t, std_st_hour_u, std_st_min_t, std_st_min_u;
+uint8_t std_brk_hour_t, std_brk_hour_u, std_brk_min_t, std_brk_min_u;
+
 
 
 // Menu options: position order
-enum{p_main_config, p_main_alarm, p_main_study, p_main_back};	// Main menu
+enum{p_main_config, p_main_alarm, p_main_back, p_main_study};	// Main menu	(Study not yet available)
 enum{p_conf_time, p_conf_back};	// Config menu
 enum{p_al_time, p_al_enable, p_al_back};	// Alarm menu
 enum{p_std_studytime, p_std_breaktime, p_std_enable, p_std_back};	// Study menu

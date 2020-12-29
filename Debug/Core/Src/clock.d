@@ -7,7 +7,7 @@ Core/Src/clock.o: ../Core/Src/clock.c ../Core/Inc/clock.h \
  ../Drivers/CMSIS/Include/mpu_armv7.h \
  ../Drivers/CMSIS/Device/ST/STM32G0xx/Include/system_stm32g0xx.h \
  ../Core/Inc/ws_lib.h ../Core/Inc/segment_dsp.h ../Core/Inc/config.h \
- ../Core/Inc/clock.h
+ ../Core/Inc/clock.h ../Core/Inc/clk_menu.h ../Core/Inc/ws_lib.h
 
 ../Core/Inc/clock.h:
 
@@ -32,3 +32,7 @@ Core/Src/clock.o: ../Core/Src/clock.c ../Core/Inc/clock.h \
 ../Core/Inc/config.h:
 
 ../Core/Inc/clock.h:
+
+../Core/Inc/clk_menu.h:
+
+../Core/Inc/ws_lib.h:

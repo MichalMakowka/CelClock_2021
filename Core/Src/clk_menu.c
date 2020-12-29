@@ -8,10 +8,10 @@
 #include "clk_menu.h"
 
 
-char * main_options[4] = {"config", "alarm", "study", "back"};
+char * main_options[4] = {"config", "alarm", "back", "study"};		// Study not yet available
 char * config_options[2] = {"time", "back"};
 char * alarm_options[3] = {"set hm", "enable", "back"};
-char * study_options[4] = {"study", "break", "enable", "back"};
+char * study_options[4] = {"sttime", "brtime", "enable", "back"};
 
 
 
@@ -240,7 +240,7 @@ void selectTime(void) {
 
 void displayMenu (TMENU * str_wsk) {
 
-	str_wsk->menu_pos_max = 3;	// Number of menu options in this branch
+	str_wsk->menu_pos_max = 2;	// Number of menu options in this branch
 
 	// Register menu executive functions
 	str_wsk->configuration = (void*)displayConfig;
@@ -388,7 +388,6 @@ void displayAlarm (TMENU * str_wsk) {
 			delay_ms(250);
 		}
 }
-
 
 
 

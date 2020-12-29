@@ -58,5 +58,7 @@ volatile uint8_t day_u;
 void setTime(uint8_t t_hour, uint8_t u_hour, uint8_t t_minute, uint8_t u_minute);
 void setDate(uint8_t t_day, uint8_t u_day, uint8_t t_month, uint8_t u_month, uint8_t t_year, uint8_t u_year);
 
+void checkIfAlarm(void);
+void checkIfStudy(void);
 
 #endif /* INC_CLOCK_H_ */

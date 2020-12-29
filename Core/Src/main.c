@@ -84,28 +84,10 @@ int main(void) {
 		}
 
 		// Check alarm mode
-		if (al_enable_flag == 1 && al_hour_t == hour_t && al_hour_u == hour_u && al_min_t == minute_t && al_min_u == minute_u) {	// Ring alarm if above is true
-			// Clear LCD Display (display SPACEs)
-			LEDClr();
-			// Clear WS2812B Display
-			FillLEDArray(LED_buf, 30, 0, 0);
-			SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
-			DisplayLEDStr("alarm");
-			dot_enable[1]=0; dot_enable[3]=0;
-			while(!button_flag[B_SET]) {
-				FillLEDArray(LED_buf, 30, 0, 0);
-				SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
-				buzz(250);
-				FillLEDArray(LED_buf, 0, 0, 30);
-				SPI_SEND_WSBUF(LED_buf, sizeof(LED_buf));
-				delay_ms(250);
-			}
-			LEDClr();
-			button_flag[B_SET]=0;
-			dot_enable[1]=1; dot_enable[3]=1;
-			al_enable_flag = 0;
-			GPIOA->ODR &= ~GPIO_ODR_OD6;
-		}
+		checkIfAlarm();
+
+		// Check study mode
+		checkIfStudy();
 
 
 	}

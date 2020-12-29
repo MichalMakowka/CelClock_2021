@@ -14,8 +14,8 @@
 
 // RTC Calibration values
 // By default, the value of PREDIV_A = 127, PREDIV_S = 255, CALP = 0, CALM = 0
-#define PREDIV_A 127	// [val: 0-127]
-#define PREDIV_S 251	// [val: 0-32767]
+#define PREDIV_A 126	// [val: 0-127]
+#define PREDIV_S 256	// [val: 0-32767]
 #define CALP 0			// [val: 0-1]
 #define CALM 511		// [val: 0-511]
 /*

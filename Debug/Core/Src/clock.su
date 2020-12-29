@@ -1,3 +1,5 @@
-clock.c:15:6:setTime	32	static
-clock.c:44:6:setDate	32	static
-clock.c:74:33:TIM16_IRQHandler	8	static
+clock.c:16:6:setTime	32	static
+clock.c:45:6:setDate	32	static
+clock.c:72:6:checkIfAlarm	8	static
+clock.c:97:6:checkIfStudy	8	static
+clock.c:104:33:TIM16_IRQHandler	8	static
