@@ -3128,6 +3128,7 @@ void SystemCFG (void)	{
  8001476:	2110      	movs	r1, #16
  8001478:	438a      	bics	r2, r1
  800147a:	601a      	str	r2, [r3, #0]
+//	GPIOA->MODER &= ~GPIO_MODER_MODE1_0;	// MODER: 10 - Alternative function		(SPI LED SCK)
 	// GPIOA->AFR[0] 	// AFDEL set to 0000 automatically (SPI1_MOSI)
 	SPI1->CR1 |= SPI_CR1_BR_1;	// SPI psc (010) : (8), 48/8 = 6Mhz set
  800147c:	4b56      	ldr	r3, [pc, #344]	; (80015d8 <SystemCFG+0x434>)

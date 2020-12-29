@@ -154,6 +154,7 @@ void SystemCFG (void)	{
 	// *** Configure SPI ***
 	NVIC_EnableIRQ(SPI1_IRQn);
 	GPIOA->MODER &= ~GPIO_MODER_MODE2_0;	// MODER: 10 - Alternative function
+//	GPIOA->MODER &= ~GPIO_MODER_MODE1_0;	// MODER: 10 - Alternative function		(SPI LED SCK)
 	// GPIOA->AFR[0] 	// AFDEL set to 0000 automatically (SPI1_MOSI)
 	SPI1->CR1 |= SPI_CR1_BR_1;	// SPI psc (010) : (8), 48/8 = 6Mhz set
 	SPI1->CR1 |= (SPI_CR1_MSTR | SPI_CR1_SSM | SPI_CR1_SSI);	// Set as Master (also, enable software slave management)
