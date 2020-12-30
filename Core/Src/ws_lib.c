@@ -236,6 +236,7 @@ void welcomeStrip(uint8_t * buf) {
 
 }
 
+// *** INTERRUPT ROUTINE SECTION ***
 // LED brightness ADC measurement
 __attribute__((interrupt)) void ADC1_COMP_IRQHandler(void)	{
 	ADC1->ISR |= ADC_ISR_EOC;	// Clear end of conversion flag

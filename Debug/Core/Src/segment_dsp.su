@@ -4,4 +4,4 @@ segment_dsp.c:91:6:ScrollLed	72	dynamic
 segment_dsp.c:112:6:displayChar	16	static
 segment_dsp.c:158:6:setDigit	16	static
 segment_dsp.c:211:6:LEDClr	8	static
-segment_dsp.c:221:33:TIM15_IRQHandler	8	static
+segment_dsp.c:222:33:TIM15_IRQHandler	8	static

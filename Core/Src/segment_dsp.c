@@ -217,6 +217,7 @@ void LEDClr(void) {
 	displayChar(' ', 5);
 }
 
+// *** INTERRUPT ROUTINE SECTION ***
 // LED display multiplexing
 __attribute__((interrupt)) void TIM15_IRQHandler(void)	{
 	if (TIM15->SR & TIM_SR_CC1IF)	{

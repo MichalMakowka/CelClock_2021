@@ -21,8 +21,6 @@ int main(void) {
 
 	SystemCFG();	// Configure uC registers
 
-
-
 	// Clear LCD Display (display SPACEs)
 	LEDClr();
 

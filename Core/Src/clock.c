@@ -32,11 +32,8 @@ void setTime(uint8_t t_hour, uint8_t u_hour, uint8_t t_minute, uint8_t u_minute)
 	// Enter clock init mode
 	RTC->ICSR |= RTC_ICSR_INIT;
 	while ((RTC->ICSR & RTC_ICSR_INITF) == 0);	// Wait until ready to update
-
 	RTC->TR = (TR_TEMP & TEMP_TR_MASK);		// Update clock registers
-
 	RTC->ICSR &= ~RTC_ICSR_INIT;	// Disable RTC init mode
-
 }
 
 
@@ -62,11 +59,8 @@ void setDate(uint8_t t_day, uint8_t u_day, uint8_t t_month, uint8_t u_month, uin
 	// Enter clock init mode
 	RTC->ICSR |= RTC_ICSR_INIT;
 	while ((RTC->ICSR & RTC_ICSR_INITF) == 0);	// Wait until ready to update
-
 	RTC->DR = (DR_TEMP & TEMP_DR_MASK);		// Update clock registers
-
 	RTC->ICSR &= ~RTC_ICSR_INIT;	// Disable RTC init mode
-
 }
 
 void checkIfAlarm(void) {
@@ -96,11 +90,13 @@ void checkIfAlarm(void) {
 
 void checkIfStudy(void) {
 
+	// Not functioning in the software 1.0 release
+
 }
 
 
 
-
+// *** INTERRUPT ROUTINE SECTION ***
 __attribute__((interrupt)) void TIM16_IRQHandler(void)	{
 	if (TIM16->SR & TIM_SR_CC1IF)	{
 		TIM16->SR &= ~TIM_SR_CC1IF;	// Clear flag
@@ -121,8 +117,6 @@ __attribute__((interrupt)) void TIM16_IRQHandler(void)	{
 		day_u = ((RTC->DR & RTC_DR_DU)>>0);
 
 		RTC->ICSR &= ~RTC_ICSR_RSF;		// Clear the SR update bit
-
-
 	}
 }
 

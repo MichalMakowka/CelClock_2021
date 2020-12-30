@@ -46,34 +46,11 @@ void SystemCFG (void)	{
 	GPIOD->ODR |= (GPIO_ODR_OD0 | GPIO_ODR_OD1 | GPIO_ODR_OD2 | GPIO_ODR_OD3);
 	GPIOD->MODER &= ~(GPIO_MODER_MODE0_1 | GPIO_MODER_MODE1_1 | GPIO_MODER_MODE2_1 | GPIO_MODER_MODE3_1);	// PD0-PD3: Output
 	// Techled, BUZZ
-	GPIOA->MODER &= ~(/*GPIO_MODER_MODE1_1 |*/ GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);	// PA6-PA7: Output
-//	GPIOA->ODR |= GPIO_ODR_OD1;		// Battery ctrl (capacitor charging - not connected to the V_Bat)
+	GPIOA->MODER &= ~(GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);	// PA6-PA7: Output
 	// *********************************
 
 
-	// *** Configure DMA ***
-//	RCC->AHBENR |= RCC_AHBENR_DMA1EN;
-	RCC->APBENR2 |= RCC_APBENR2_SPI1EN;
-/*	NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 
-	// Channel 1 config. (SPI1_TX)
-	SPI1->CR2 |= SPI_CR2_TXDMAEN;	// Enable Tx in DMA mode
-	DMA1_Channel1->CNDTR = (WS_NUMBER * 24);	// WS_NUMBER * 3 colours * 8 bits/colour
-	DMA1_Channel1->CCR |= DMA_CCR_PL_0 | DMA_CCR_PL_1;	// Channel 1 priority level: Very High (no time break allowed when WS data is being sent)
-	//	DMA1_Channel1->CCR |= DMA_CCR_MSIZE;	// Memory Size: 8-bit	LEAVE THE COMMENT
-	DMA1_Channel1->CCR |= DMA_CCR_PSIZE_0;	// Peripheral Size: 16-bit (16-bit SPI data register)
-	DMA1_Channel1->CCR |= DMA_CCR_MINC;		// Memory increment mode	(increments the LED data array)
-	DMA1_Channel1->CCR |= DMA_CCR_DIR;		// Read from Memory to Peripheral (DIR=1)
-//	DMA1_Channel1->CCR |= DMA_CCR_TCIE | DMA_CCR_TEIE;		// Transfer complete interrupt, transfer error enabled
-	DMA1_Channel1->CCR |= DMA_CCR_CIRC;		// Circular mode ON
-//	DMA1_Channel1->CMAR = (uint32_t)DMA_LED_buf;	// Memory address is the LED array
-	DMA1_Channel1->CPAR = (uint32_t)&SPI1->DR;	// Peripheral address is the SPI data register
-	// *********************************
-
-	// *** Configure DMAMUX ***
-	DMAMUX1_Channel1->CCR |= DMAMUX_CxCR_DMAREQ_ID_0 | DMAMUX_CxCR_DMAREQ_ID_4;			// DMA request identification: SPI1_TX (17)
-	// *********************************
-*/
 	// *** Configure TIM14 for delay subroutine ***
 	NVIC_EnableIRQ(TIM14_IRQn);
 	RCC->APBENR2 |= RCC_APBENR2_TIM14EN;	// Enable TIM14 clock
@@ -153,9 +130,9 @@ void SystemCFG (void)	{
 
 	// *** Configure SPI ***
 	NVIC_EnableIRQ(SPI1_IRQn);
+	RCC->APBENR2 |= RCC_APBENR2_SPI1EN;
 	GPIOA->MODER &= ~GPIO_MODER_MODE2_0;	// MODER: 10 - Alternative function
-//	GPIOA->MODER &= ~GPIO_MODER_MODE1_0;	// MODER: 10 - Alternative function		(SPI LED SCK)
-	// GPIOA->AFR[0] 	// AFDEL set to 0000 automatically (SPI1_MOSI)
+	// GPIOA->AFR[0] 	// AFDEL set to 0000 automatically (SPI1_MOSI)		LEAVE THE COMMENT
 	SPI1->CR1 |= SPI_CR1_BR_1;	// SPI psc (010) : (8), 48/8 = 6Mhz set
 	SPI1->CR1 |= (SPI_CR1_MSTR | SPI_CR1_SSM | SPI_CR1_SSI);	// Set as Master (also, enable software slave management)
 	SPI1->CR1 |= SPI_CR1_CPHA;	// The second clock transition is the first data capture edge (as a result, first LED will always be active)
@@ -201,11 +178,6 @@ void SystemCFG (void)	{
 
 	EXTI->IMR1 |= EXTI_IMR1_IM11 | EXTI_IMR1_IM12 | EXTI_IMR1_IM15;
 	// *********************************
-/*
-	// *** Enable DMA Channel ***
-	DMA1_Channel1->CCR |= DMA_CCR_EN;	// Channel 1 enable (SPI1_TX)
-	// *********************************
-*/
 }
 
 
@@ -217,20 +189,6 @@ void delay_ms (uint16_t ms)	{
 }
 
 
-/*
-__attribute__((interrupt)) void DMA1_Channel1_IRQHandler(void)	{
-	if (DMA1->ISR & DMA_ISR_TCIF1){
-		DMA1->IFCR = DMA_IFCR_CTCIF1;	// Clear DMA Channel 1 transfer complete flag
-//		DMA1_Channel1->CCR &= ~DMA_CCR_EN;		// Channel 1 Disabled (SPI1_TX)
-	}
-
-	if (DMA1->ISR & DMA_ISR_TEIF1){
-		DMA1->IFCR = DMA_IFCR_CTEIF1;
-		GPIOA->ODR |= GPIO_ODR_OD6;
-	}
-}
-*/
-
 
 void buzz (uint8_t time) {
 	GPIOA->ODR |= GPIO_ODR_OD7;
@@ -238,6 +196,8 @@ void buzz (uint8_t time) {
 	GPIOA->ODR &= ~GPIO_ODR_OD7;
 }
 
+
+// *** INTERRUPT ROUTINE SECTION ***
 __attribute__((interrupt)) void TIM14_IRQHandler(void)	{
 	if (TIM14->SR & TIM_SR_CC1IF)	{
 		TIM14->SR &= ~TIM_SR_CC1IF;	// Clear flag
@@ -265,5 +225,4 @@ __attribute__((interrupt)) void EXTI4_15_IRQHandler(void)	{
 		}
 
 }
-
 
