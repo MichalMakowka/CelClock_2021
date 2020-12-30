@@ -16,4 +16,4 @@
 
 
 ### About the project:
-The main purpose of the system is to display the current time and date on the PCB front equipped with a series of WS2812B intelligent RGB LEDs. The system is controlled by the STM32G071CBT6 microcontroller. It also consists of an embedded RTC clock that determines the current time to be displayed. The hardware design allows for a battery support of the Battery Backup Domain registers via a supercapacitor, as well as writing data to an external 2kB EEPROM memory.
+The primary objective is to display the current time and date on the PCB front equipped with a series of WS2812B intelligent RGB LEDs. The STM32G071CBT6 microcontroller is in charge of the system control. It also consists of an embedded RTC clock that determines the current time to be displayed. The hardware design allows for battery support of the Battery Backup Domain registers via a supercapacitor and writing data to an external 2kB EEPROM memory.
