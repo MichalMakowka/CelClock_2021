@@ -1,7 +1,7 @@
 # CelClock_2021
  These are CelClock 2021 source files.
  
- The program was written and compiled for the STM32G071CBT6.
+ The program was written and compiled for the STM32G071CBT6 in the STM32CubeIDE environment.
  
  Download the schematic and a 3D model files (both are PDFs) to see the electrical connections, and the PCB layout.
 
