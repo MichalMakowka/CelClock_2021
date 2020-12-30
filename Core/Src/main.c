@@ -2,7 +2,21 @@
  * main.c
  *
  *  Created on: Dec 15, 2020
- *      Author: Michal Makowka
+ *  Author: Michal Makowka
+ *
+ *  All rights reserved.
+ *
+ *  Project version: v.1.0
+ *
+ *  These are CelClock 2021 project source files.
+ *  The following libraries need to be included:
+ *  -config.h (register configuration)
+ *  -ws_lib.h (WS2812 library)
+ *  -segment_dsp.h (16-segment display library)
+ *  -clock.h (RTC and time/date configuration)
+ *  -clk_menu.h (UI and system menu configuration)
+ *
+ *
  */
 
 #include "stm32g071xx.h"
