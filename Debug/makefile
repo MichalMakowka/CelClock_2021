@@ -53,8 +53,8 @@ all: main-build
 main-build: CelClock_2021.elf secondary-outputs
 
 # Tool invocations
-CelClock_2021.elf: $(OBJS) $(USER_OBJS) C:\Users\hp\STM32CubeIDE\workspace_1.3.0\CelClock_2021\STM32G071CBTX_FLASH.ld
-	arm-none-eabi-gcc -o "CelClock_2021.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\hp\STM32CubeIDE\workspace_1.3.0\CelClock_2021\STM32G071CBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CelClock_2021.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CelClock_2021.elf: $(OBJS) $(USER_OBJS) C:\Users\user\STM32CubeIDE\workspace_1.5.1\CelClock_2021\STM32G071CBTX_FLASH.ld
+	arm-none-eabi-gcc -o "CelClock_2021.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\user\STM32CubeIDE\workspace_1.5.1\CelClock_2021\STM32G071CBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CelClock_2021.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
