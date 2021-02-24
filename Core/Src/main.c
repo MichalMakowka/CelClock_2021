@@ -6,7 +6,7 @@
  *
  *  All rights reserved.
  *
- *  Project version: v.1.0
+ *  Project version: v.1.1
  *
  *  These are CelClock 2021 project source files.
  *  The following libraries need to be included:
